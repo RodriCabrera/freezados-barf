@@ -3,7 +3,20 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
+import UserDAO from '../../database/DAOs/User.dao';
+
 export default function TabOneScreen() {
+  const users = new UserDAO()
+  // users.deleteAll('USERS')
+
+  // TODO: Better handle async code to avoid callback hell
+  const newUser = users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' }).then(res => {
+    if(res) {
+      users.getById(res).then(user => console.log(user))
+    }
+  }).then(() => 
+    users.getAll().then(res => console.log(res))
+  )
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
