@@ -7,16 +7,17 @@ import UserDAO from '../../database/DAOs/User.dao';
 
 export default function TabOneScreen() {
   const users = new UserDAO()
-  // users.deleteAll('USERS')
+  users.deleteAll('USERS')
 
   // TODO: Better handle async code to avoid callback hell
-  // const newUser = users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' }).then(res => {
-  //   if(res) {
-  //     users.getById(res).then(user => console.log(user))
-  //   }
-  // }).then(() => 
-  //   users.getAll().then(res => console.log(res))
-  // )
+  users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' })
+  .then(res => {
+    if(res) {
+      users.getById(res).then(user => console.log(user))
+    }
+  }).then(() => 
+    users.getAll().then(res => console.log(res))
+  ).catch(err => console.error(err))
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>

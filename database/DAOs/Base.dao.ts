@@ -8,11 +8,11 @@ export default class BaseDAO<T> {
         db.exec([{ sql: `delete from ${this.tableName};`, args: []}], false, (err) => err && console.error(err))
     }
 
-    async getAll() {
+    async getAll(projection: string[] = ['*']) {
         try {
             const db = SQLiteDB.getInstance()
             const res = await db.execAsync([
-                { sql: `select * from ${this.tableName};`, args: [] }
+                { sql: `select ${projection.join(',')} from ${this.tableName};`, args: [] }
             ], true)
             return res[0].rows as T[]
         } catch(err) {
@@ -21,11 +21,11 @@ export default class BaseDAO<T> {
         }
     }
 
-    async getById(id: number) {
+    async getById(id: number, projection: string[] = ['*']) {
         try {
             const db = SQLiteDB.getInstance()
             const res = await db.execAsync([
-                { sql: `select * from ${this.tableName} where id = ? limit 1`, args: [id] }
+                { sql: `select ${projection.join(',')} from ${this.tableName} where id = ? limit 1;`, args: [id] }
             ], true)
             return res[0].rows[0] as T
         } catch(err) {
