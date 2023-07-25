@@ -47,4 +47,13 @@ export default class BaseDAO<T> {
     deleteAll(security: string) {
         if(security === this.tableName) this.$truncate()
     }
+
+    dropTable(security: string) {
+        if(security === this.tableName) {
+            const db = SQLiteDB.getInstance()
+            db.execAsync([
+                { sql: `drop table if exists ${this.tableName}`, args: []}
+            ], false)
+        }
+    }
 }

@@ -6,7 +6,7 @@ import { User } from "./User.dao"
 export type Species = 'PIG' | 'FISH' | 'BOVINE' | 'AVIAR'
 
 export type Food = {
-    id: string
+    id: number
     name: string
     user_id: User['id']
     description?: string
@@ -26,7 +26,7 @@ export default class FoodDAO extends BaseDAO<Food> {
             [{ sql: `create table if not exists ${TABLE_NAME} 
                     (id integer primary key autoincrement not null, 
                         name text, description text, species text, 
-                        user_id integer, ubication_id integer
+                        user_id integer, ubication_id integer,
                      foreign key(user_id) references USER(id));`,
             args: []}], false)
         .catch(err => console.error('Error al instanciar la tabla', err))

@@ -10,8 +10,8 @@ type Entry = {
     user_id: User['id']
     ubication_id: Ubication['id']
     food_id: Food['id']
-    date_stored: string
-    date_ready: string
+    date_stored?: number
+    date_ready?: number
     quantity: number
     taken: boolean
 }
@@ -31,8 +31,8 @@ export default class EntryDAO extends BaseDAO<Entry> {
             [{ sql: `create table if not exists ${TABLE_NAME} 
                     (id integer primary key autoincrement not null,  
                         user_id integer, ubication_id integer,
-                        food_id integer, date_stored text,
-                        date_ready text, quantity integer,
+                        food_id integer, date_stored integer,
+                        date_ready integer, quantity integer,
                         taken integer default 0,
                      foreign key(user_id) references USER(id),
                      foreign key(ubication_id) references UBICATION(id),
@@ -48,7 +48,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
                 { sql: `
                     insert into ${TABLE_NAME} (food_id, ubication_id, user_id, quantity, date_stored, date_ready)
                     values (?,?,?,?,?,?)
-                `, args: [data.food_id, data.ubication_id, data.user_id, data.quantity, data.date_stored, data.date_ready]}
+                `, args: [data.food_id, data.ubication_id, data.user_id, data.quantity, data.date_stored || Date.now(), data.date_ready]}
             ], false)
             return res[0].insertId
         } catch(err) {
