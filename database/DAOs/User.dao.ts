@@ -1,7 +1,7 @@
 import BaseDAO from "./Base.dao";
 import SQLiteDB from "../SQLite.database";
 
-type User = {
+export type User = {
     id: number
     name?: string
     email?: string

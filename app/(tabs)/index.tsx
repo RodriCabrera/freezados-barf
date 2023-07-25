@@ -10,13 +10,13 @@ export default function TabOneScreen() {
   // users.deleteAll('USERS')
 
   // TODO: Better handle async code to avoid callback hell
-  const newUser = users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' }).then(res => {
-    if(res) {
-      users.getById(res).then(user => console.log(user))
-    }
-  }).then(() => 
-    users.getAll().then(res => console.log(res))
-  )
+  // const newUser = users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' }).then(res => {
+  //   if(res) {
+  //     users.getById(res).then(user => console.log(user))
+  //   }
+  // }).then(() => 
+  //   users.getAll().then(res => console.log(res))
+  // )
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
