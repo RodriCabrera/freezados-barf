@@ -4,9 +4,11 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 
 import UserDAO from '../../database/DAOs/User.dao';
+import UbicationDAO from '../../database/DAOs/Ubication.dao';
 
 export default function TabOneScreen() {
   const users = new UserDAO()
+  const ubications = new UbicationDAO()
   users.deleteAll('USER')
 
   // TODO: Better handle async code to avoid callback hell
