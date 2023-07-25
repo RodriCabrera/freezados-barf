@@ -33,6 +33,17 @@ export default class BaseDAO<T> {
             throw new Error('Failed to get element')
         }
     }
+
+    async insertOne(data: Partial<T>): Promise<number | undefined> {
+        console.error('Method not implemented for ', this.tableName)
+        return undefined
+    }
+
+    async insertMany(data: Partial<T>[]): Promise<number[] | undefined> {
+        console.error('Method not implemented for ', this.tableName)
+        return undefined
+    }
+
     deleteAll(security: string) {
         if(security === this.tableName) this.$truncate()
     }

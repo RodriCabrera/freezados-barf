@@ -1,6 +1,7 @@
 import BaseDAO from "./Base.dao"
-import { User } from "./User.dao"
 import SQLiteDB from "../SQLite.database"
+
+import { User } from "./User.dao"
 
 const TABLE_NAME = 'UBICATION'
 
@@ -30,5 +31,21 @@ export default class UbicationDAO extends BaseDAO<Ubication> {
                      foreign key(user_id) references USER(id));`,
             args: []}], false)
         .catch(err => console.error('Error al instanciar la tabla', err))
+    }
+
+    async insertOne(data: Omit<Ubication, 'id'>): Promise<number | undefined> {
+        try {
+            const db = SQLiteDB.getInstance()
+            const res = await db.execAsync(
+                [{ sql: `insert into ${TABLE_NAME} 
+                    (name, description, ubication, isFreezer, user_id) values (?,?,?,?,?)`,
+                args: [data.name, data.description, data.ubication, data.isFreezer, data.user_id]}],
+                false
+            )
+            return res[0].insertId
+        } catch(err) {
+            if (err instanceof Error) throw err
+            throw new Error('Error al insertar elementos')
+        }
     }
 }
