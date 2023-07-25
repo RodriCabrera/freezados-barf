@@ -15,13 +15,18 @@ export default class UserDAO extends BaseDAO<User> {
         this.$init()
     }
 
-    private $init() {
-        const db = SQLiteDB.getInstance()
-        db.execAsync(
-            [{ sql: `create table if not exists ${TABLE_NAME} 
-                (id integer primary key autoincrement not null, name text, email text);`,
-            args: []}], false)
-        .catch(err => console.error('Error al instanciar la tabla', err))
+    private async $init() {
+        try {
+            const db = SQLiteDB.getInstance()
+            await db.execAsync(
+                [{ sql: `create table if not exists ${TABLE_NAME} 
+                    (id integer primary key autoincrement not null, name text, email text);`,
+                args: []}], false)
+        } catch(err) {
+            if (err instanceof Error) throw err
+            throw new Error('Error al iniciar la tabla')
+        }
+        // .catch(err => console.error('Error al instanciar la tabla', err))
     }
 
     async insertOne(data: Omit<User, 'id'>) {
