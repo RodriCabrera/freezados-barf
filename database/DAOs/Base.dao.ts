@@ -3,7 +3,7 @@ import SQLiteDB from "../SQLite.database";
 export default class BaseDAO<T> {
     constructor(public tableName: string) {}
 
-    protected _truncate() {
+    private $truncate() {
         const db = SQLiteDB.getInstance()
         db.exec([{ sql: `delete from ${this.tableName};`, args: []}], false, (err) => err && console.error(err))
     }
@@ -32,5 +32,8 @@ export default class BaseDAO<T> {
             if (err instanceof Error) throw err
             throw new Error('Failed to get element')
         }
+    }
+    deleteAll(security: string) {
+        if(security === this.tableName) this.$truncate()
     }
 }

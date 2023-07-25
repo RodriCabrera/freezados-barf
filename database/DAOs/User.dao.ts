@@ -7,7 +7,7 @@ export type User = {
     email?: string
 }
 
-const TABLE_NAME = 'USERS'
+const TABLE_NAME = 'USER'
 
 export default class UserDAO extends BaseDAO<User> {
     constructor() { 
@@ -35,9 +35,5 @@ export default class UserDAO extends BaseDAO<User> {
             if(err instanceof Error) throw err
             throw new Error('Failed to create User')
         }
-    }
-
-    deleteAll(security: string) {
-        if(security === TABLE_NAME) this._truncate()
     }
 }

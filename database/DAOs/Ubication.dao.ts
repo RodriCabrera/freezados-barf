@@ -3,7 +3,7 @@ import { User } from "./User.dao";
 
 const TABLE_NAME = 'UBICATION'
 
-type Ubication = {
+export type Ubication = {
     id: number
     name: string
     ubication: string
@@ -13,7 +13,5 @@ type Ubication = {
 }
 
 export default class UbicationDAO extends BaseDAO<Ubication> {
-    constructor() {
-        super(TABLE_NAME)
-    }
+    constructor() { super(TABLE_NAME) }
 }

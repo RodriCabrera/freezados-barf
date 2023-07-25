@@ -7,7 +7,7 @@ import UserDAO from '../../database/DAOs/User.dao';
 
 export default function TabOneScreen() {
   const users = new UserDAO()
-  users.deleteAll('USERS')
+  users.deleteAll('USER')
 
   // TODO: Better handle async code to avoid callback hell
   users.insertOne({ email: 's.rubio91@gmail.com', name: 'Santiago Rubio' })
