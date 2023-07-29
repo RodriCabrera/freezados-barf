@@ -21,7 +21,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json']
   },
-  plugins: ['react', 'react-native', '@typescript-eslint'],
+  plugins: ['react', 'react-native', '@typescript-eslint', 'prettier'],
   settings: {
     react: {
       version: 'detect'
@@ -34,6 +34,7 @@ module.exports = {
   },
   ignorePatterns: ['node_modules/', 'build/', 'dist/', '.eslintrc.js'],
   rules: {
+    'prettier/prettier': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'warn',
     'react/react-in-jsx-scope': 'off',
