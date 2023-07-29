@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
+import EditScreenInfo from '../../components/EditScreenInfo'
+import { Text, View } from '../../components/Themed'
 
 export default function TabTwoScreen() {
   return (
@@ -14,22 +14,22 @@ export default function TabTwoScreen() {
       />
       <EditScreenInfo path="app/(tabs)/two.tsx" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    alignItems: 'center',
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center'
   },
   separator: {
     height: 1,
     marginVertical: 30,
-    width: "80%",
+    width: '80%'
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-  },
-});
+    fontWeight: 'bold'
+  }
+})

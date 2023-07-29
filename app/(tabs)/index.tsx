@@ -1,44 +1,44 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform } from 'react-native'
 
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
+import EditScreenInfo from '../../components/EditScreenInfo'
+import { Text, View } from '../../components/Themed'
 
-import SQLiteDB from "../../database/SQLite.database";
+import SQLiteDB from '../../database/SQLite.database'
 
 export default function TabOneScreen() {
-  const db = SQLiteDB.getInstance();
-  if (Platform.OS !== "web") {
+  const db = SQLiteDB.getInstance()
+  if (Platform.OS !== 'web') {
     // examples
     db.execAsync(
       [
-        { sql: "drop table if exists items", args: [] },
+        { sql: 'drop table if exists items', args: [] },
         {
-          sql: "create table if not exists items (id int primary key not null, done boolean, value varchar(255));",
-          args: [],
+          sql: 'create table if not exists items (id int primary key not null, done boolean, value varchar(255));',
+          args: []
         },
         {
-          sql: "insert into items (id, done, value) values (?, ?, ?)",
-          args: [1, 0, "hola desde la base de datos"],
-        },
+          sql: 'insert into items (id, done, value) values (?, ?, ?)',
+          args: [1, 0, 'hola desde la base de datos']
+        }
       ],
       false
     )
       .then((res) => {
-        console.log(res);
+        console.log(res)
       })
       .catch((err) => {
-        console.error(err);
-      });
+        console.error(err)
+      })
 
-    db.execAsync([{ sql: "select * from items", args: [] }], true)
+    db.execAsync([{ sql: 'select * from items', args: [] }], true)
       .then((res) => {
         res[0].rows.forEach((i) => {
-          console.log(i.value);
-        });
+          console.log(i.value)
+        })
       })
       .catch((err) => {
-        console.error(err);
-      });
+        console.error(err)
+      })
     //
   }
   return (
@@ -51,22 +51,22 @@ export default function TabOneScreen() {
       />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    alignItems: 'center',
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center'
   },
   separator: {
     height: 1,
     marginVertical: 30,
-    width: "80%",
+    width: '80%'
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-  },
-});
+    fontWeight: 'bold'
+  }
+})
