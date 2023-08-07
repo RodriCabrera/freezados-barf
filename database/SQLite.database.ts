@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 import * as SQLite from 'expo-sqlite'
 
 export default class SQLiteDB {
