@@ -14,10 +14,10 @@ export {
   ErrorBoundary
 } from 'expo-router'
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)'
-}
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: '(tabs)'
+// }
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -32,7 +32,7 @@ export default function RootLayout() {
 
   const onLayoutRootView = useCallback(async () => {
     if (loaded) {
-      await SplashScreen.hideAsync()
+      SplashScreen.hideAsync()
     }
   }, [loaded])
 
