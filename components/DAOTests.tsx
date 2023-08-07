@@ -5,16 +5,16 @@ import FoodDAO from '../database/DAOs/Food.dao'
 import UbicationDAO from '../database/DAOs/Ubication.dao'
 import EntryDAO from '../database/DAOs/Entry.dao'
 
-function prepare() {
-  const users = new UserDAO()
-  users.dropTable('USER')
-  const ubications = new UbicationDAO()
-  ubications.dropTable('UBICATION')
-  const foods = new FoodDAO()
-  foods.dropTable('FOOD')
-  const entries = new EntryDAO()
-  entries.dropTable('ENTRY')
-}
+// function prepare() {
+//   const users = new UserDAO()
+//   users.dropTable('USER')
+//   const ubications = new UbicationDAO()
+//   ubications.dropTable('UBICATION')
+//   const foods = new FoodDAO()
+//   foods.dropTable('FOOD')
+//   const entries = new EntryDAO()
+//   entries.dropTable('ENTRY')
+// }
 
 // prepare() // -> Prueba que se creen correctamente las tablas si ya estabamos usando alguna
 
