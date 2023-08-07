@@ -62,7 +62,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
               data.ubication_id,
               data.user_id,
               data.quantity,
-              data.date_stored || Date.now(),
+              data.date_stored ?? Date.now(),
               data.date_ready
             ]
           }
