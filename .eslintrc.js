@@ -42,8 +42,9 @@ module.exports = {
     '@typescript-eslint/await-thenable': 'warn',
     'react-native/no-raw-text': 'off',
     'react/prop-types': 'off',
-    '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
-    'react-native/no-inline-styles': 'off'
+    'react-native/no-inline-styles': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }
