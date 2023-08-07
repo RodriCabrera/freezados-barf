@@ -1,4 +1,5 @@
 import SQLiteDB from '../SQLite.database'
+import { type ResultSet, type ResultSetError } from 'expo-sqlite'
 
 export default class BaseDAO<T> {
   constructor(public tableName: string) {}
@@ -14,6 +15,11 @@ export default class BaseDAO<T> {
     )
   }
 
+  checkError(response: ResultSet | ResultSetError): response is ResultSet {
+    if (Object.hasOwn(response, 'error')) return false
+    return true
+  }
+
   async getAll(projection: string[] = ['*']) {
     try {
       const db = SQLiteDB.getInstance()
@@ -26,7 +32,9 @@ export default class BaseDAO<T> {
         ],
         true
       )
-      return res[0].rows as T[]
+      if (this.checkError(res[0])) {
+        return res[0].rows as T[]
+      }
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get elements')
@@ -47,7 +55,9 @@ export default class BaseDAO<T> {
         ],
         true
       )
-      return res[0].rows[0] as T
+      if (this.checkError(res[0])) {
+        return res[0].rows[0] as T
+      }
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get element')

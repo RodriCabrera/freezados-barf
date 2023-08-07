@@ -47,7 +47,9 @@ export default class UserDAO extends BaseDAO<User> {
         ],
         false
       )
-      return res[0].insertId
+      if (this.checkError(res[0])) {
+        return res[0].insertId
+      }
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to create User')

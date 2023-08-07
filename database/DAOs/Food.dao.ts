@@ -54,7 +54,9 @@ export default class FoodDAO extends BaseDAO<Food> {
         ],
         false
       )
-      return res[0].insertId
+      if (this.checkError(res[0])) {
+        return res[0].insertId
+      }
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Error al insertar elemento')

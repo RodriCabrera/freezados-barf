@@ -69,7 +69,9 @@ export default class EntryDAO extends BaseDAO<Entry> {
         ],
         false
       )
-      return res[0].insertId
+      if (this.checkError(res[0])) {
+        return res[0].insertId
+      }
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Error al insertar elemento')
