@@ -51,7 +51,7 @@ const TabLayout = () => {
         options={{
           title: 'Guardar nuevo',
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="plus-circle" color={color} size={42} />
+            <TabBarIcon name="plus-circle" color={color} size={55} />
           )
         }}
       />
