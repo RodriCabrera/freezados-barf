@@ -51,7 +51,10 @@ function RootLayoutNav({ onLayoutRootView }: any) {
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen
+            name="modal/species"
+            options={{ presentation: 'modal', title: 'Tiempo de congelado' }}
+          />
         </Stack>
       </View>
     </ThemeProvider>

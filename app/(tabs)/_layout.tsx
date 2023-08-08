@@ -28,16 +28,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          title: 'Home',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="fridge-outline" color={color} />
           ),
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="modal/species" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <MaterialCommunityIcons
-                    name="information-outline"
+                    name="information"
                     size={25}
                     color={Colors[colorScheme ?? 'light'].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
@@ -51,7 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Tab Two',
+          title: 'Alimentos',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="food-drumstick-outline" color={color} />
           )
