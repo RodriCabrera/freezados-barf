@@ -28,7 +28,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Listado',
           tabBarIcon: ({ color }) => <TabBarIcon name="fridge" color={color} />,
           headerRight: () => (
             <Link href="modal/species" asChild>
@@ -49,7 +49,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="add"
         options={{
-          title: 'Add',
+          title: 'Guardar nuevo',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="plus-circle" color={color} size={42} />
           )
