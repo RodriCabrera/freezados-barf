@@ -1,37 +1,35 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Link, Tabs } from 'expo-router'
-import { Pressable, useColorScheme } from 'react-native'
+import { Pressable, StyleSheet, useColorScheme } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 import Colors from '../../constants/Colors'
+import { TabBarIcon } from '../../features/common/components/TabBarIcon'
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof MaterialCommunityIcons>['name']
-  color: string
-}) {
-  return (
-    <MaterialCommunityIcons size={28} style={{ marginBottom: -3 }} {...props} />
-  )
-}
-
-export default function TabLayout() {
+const TabLayout = () => {
   const colorScheme = useColorScheme()
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#a75ba7',
+        tabBarInactiveTintColor: '#e3a2d6',
+        tabBarShowLabel: false,
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={['#fae7d3', '#fad3fa', '#faf7d3']}
+            start={[1, 0]}
+            end={[0, 0]}
+            style={{ flex: 1, borderRadius: 20 }}
+          />
+        )
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="fridge-outline" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="fridge" color={color} />,
           headerRight: () => (
             <Link href="modal/species" asChild>
               <Pressable>
@@ -49,14 +47,35 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="add"
+        options={{
+          title: 'Add',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="plus-circle" color={color} size={42} />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="history"
         options={{
           title: 'Alimentos',
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="food-drumstick-outline" color={color} />
-          )
+          tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />
         }}
       />
     </Tabs>
   )
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    borderTopWidth: 0,
+    elevation: 0,
+    height: 60,
+    marginBottom: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    position: 'absolute'
+  }
+})
+
+export default TabLayout

@@ -43,6 +43,7 @@ export default function RootLayout() {
   return <RootLayoutNav onLayoutRootView={onLayoutRootView} />
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function RootLayoutNav({ onLayoutRootView }: any) {
   const colorScheme = useColorScheme()
 

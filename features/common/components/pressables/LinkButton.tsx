@@ -1,6 +1,7 @@
 import { router } from 'expo-router'
 import { Pressable, StyleSheet, Text } from 'react-native'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const LinkButton = ({ href, children }: any) => {
   const navigate = (href: string) => () => {
     router.push(href)

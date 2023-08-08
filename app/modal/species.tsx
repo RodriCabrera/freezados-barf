@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import { Platform, StyleSheet } from 'react-native'
-
-import { Text, View } from '../../components/Themed'
-import { LinkButton } from '../../components/pressables/LinkButton'
+import { Text, View } from '../../features/common/components/Themed'
+import { LinkButton } from '../../features/common/components/pressables/LinkButton'
 
 export default function SpeciesModal() {
   return (
