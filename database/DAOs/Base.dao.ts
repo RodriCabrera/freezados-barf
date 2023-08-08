@@ -1,59 +1,90 @@
-import SQLiteDB from "../SQLite.database";
+import SQLiteDB from '../SQLite.database'
+import { type ResultSet, type ResultSetError } from 'expo-sqlite'
 
 export default class BaseDAO<T> {
-    constructor(public tableName: string) {}
+  constructor(public tableName: string) {}
 
-    private $truncate() {
-        const db = SQLiteDB.getInstance()
-        db.exec([{ sql: `delete from ${this.tableName};`, args: []}], false, (err) => err && console.error(err))
-    }
+  private $truncate() {
+    const db = SQLiteDB.getInstance()
+    db.exec(
+      [{ sql: `delete from ${this.tableName};`, args: [] }],
+      false,
+      (err) => {
+        err != null && console.error(err)
+      }
+    )
+  }
 
-    async getAll(projection: string[] = ['*']) {
-        try {
-            const db = SQLiteDB.getInstance()
-            const res = await db.execAsync([
-                { sql: `select ${projection.join(',')} from ${this.tableName};`, args: [] }
-            ], true)
-            return res[0].rows as T[]
-        } catch(err) {
-            if (err instanceof Error) throw err
-            throw new Error('Failed to get elements')
-        }
-    }
+  checkError(response: ResultSet | ResultSetError): response is ResultSet {
+    if (Object.hasOwn(response, 'error')) return false
+    return true
+  }
 
-    async getById(id: number, projection: string[] = ['*']) {
-        try {
-            const db = SQLiteDB.getInstance()
-            const res = await db.execAsync([
-                { sql: `select ${projection.join(',')} from ${this.tableName} where id = ? limit 1;`, args: [id] }
-            ], true)
-            return res[0].rows[0] as T
-        } catch(err) {
-            if (err instanceof Error) throw err
-            throw new Error('Failed to get element')
-        }
+  async getAll(projection: string[] = ['*']) {
+    try {
+      const db = SQLiteDB.getInstance()
+      const res = await db.execAsync(
+        [
+          {
+            sql: `select ${projection.join(',')} from ${this.tableName};`,
+            args: []
+          }
+        ],
+        true
+      )
+      if (this.checkError(res[0])) {
+        return res[0].rows as T[]
+      }
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Failed to get elements')
     }
+  }
 
-    async insertOne(data: Partial<T>): Promise<number | undefined> {
-        console.error('Method not implemented for ', this.tableName)
-        return undefined
+  async getById(id: number, projection: string[] = ['*']) {
+    try {
+      const db = SQLiteDB.getInstance()
+      const res = await db.execAsync(
+        [
+          {
+            sql: `select ${projection.join(',')} from ${
+              this.tableName
+            } where id = ? limit 1;`,
+            args: [id]
+          }
+        ],
+        true
+      )
+      if (this.checkError(res[0])) {
+        return res[0].rows[0] as T
+      }
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Failed to get element')
     }
+  }
 
-    async insertMany(data: Partial<T>[]): Promise<number[] | undefined> {
-        console.error('Method not implemented for ', this.tableName)
-        return undefined
-    }
+  async insertOne(data: Partial<T>): Promise<number | undefined> {
+    console.error('Method not implemented for ', this.tableName)
+    return undefined
+  }
 
-    deleteAll(security: string) {
-        if(security === this.tableName) this.$truncate()
-    }
+  async insertMany(data: Array<Partial<T>>): Promise<number[] | undefined> {
+    console.error('Method not implemented for ', this.tableName)
+    return undefined
+  }
 
-    dropTable(security: string) {
-        if(security === this.tableName) {
-            const db = SQLiteDB.getInstance()
-            db.execAsync([
-                { sql: `drop table if exists ${this.tableName}`, args: []}
-            ], false)
-        }
+  deleteAll(security: string) {
+    if (security === this.tableName) this.$truncate()
+  }
+
+  dropTable(security: string) {
+    if (security === this.tableName) {
+      const db = SQLiteDB.getInstance()
+      db.execAsync(
+        [{ sql: `drop table if exists ${this.tableName}`, args: [] }],
+        false
+      )
     }
+  }
 }

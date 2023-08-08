@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
-import { MonoText } from "./StyledText";
-import { Text, View } from "./Themed";
+import { MonoText } from './StyledText'
+import { Text, View } from './Themed'
 
 export default function EditScreenInfo({ path }: { path: string }) {
   return (
@@ -34,24 +34,24 @@ export default function EditScreenInfo({ path }: { path: string }) {
         </Text>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
   codeHighlightContainer: {
     borderRadius: 3,
-    paddingHorizontal: 4,
+    paddingHorizontal: 4
+  },
+  getStartedContainer: {
+    alignItems: 'center',
+    marginHorizontal: 50
   },
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: "center",
+    textAlign: 'center'
   },
-});
+  homeScreenFilename: {
+    marginVertical: 7
+  }
+})
