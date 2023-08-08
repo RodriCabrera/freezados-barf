@@ -8,6 +8,7 @@ import {
   useColorScheme,
   View as DefaultView
 } from 'react-native'
+
 import Colors from '../../../constants/Colors'
 
 export function useThemeColor(
