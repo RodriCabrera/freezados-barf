@@ -46,6 +46,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'react-native/no-inline-styles': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
-    'react-native/no-color-literals': 'warn'
+    'react-native/no-color-literals': 'off'
   }
 }
