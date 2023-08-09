@@ -43,6 +43,7 @@ export default function RootLayout() {
   return <RootLayoutNav onLayoutRootView={onLayoutRootView} />
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function RootLayoutNav({ onLayoutRootView }: any) {
   const colorScheme = useColorScheme()
 
@@ -51,7 +52,10 @@ function RootLayoutNav({ onLayoutRootView }: any) {
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen
+            name="modal/species"
+            options={{ presentation: 'modal', title: 'Tiempo de congelado' }}
+          />
         </Stack>
       </View>
     </ThemeProvider>

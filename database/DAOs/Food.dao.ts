@@ -1,6 +1,5 @@
 import BaseDAO from './Base.dao'
 import SQLiteDB from '../SQLite.database'
-
 import { type User } from './User.dao'
 
 export type Species = 'PIG' | 'FISH' | 'BOVINE' | 'AVIAR'

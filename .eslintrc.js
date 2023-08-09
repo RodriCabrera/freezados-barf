@@ -45,6 +45,35 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'react-native/no-inline-styles': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'off'
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    'react-native/no-color-literals': 'off',
+    'import/order': [
+      'error',
+      {
+        'newlines-between': 'always',
+        groups: [
+          'external',
+          ['builtin', 'index', 'internal', 'parent', 'sibling']
+        ],
+        pathGroups: [
+          {
+            pattern: '@(react*)',
+            group: 'external'
+          },
+          {
+            pattern:
+              '{pages,vendors,locales,assets,components,hooks,services,utils,features,layouts,store}/**',
+            group: 'internal'
+          },
+          {
+            pattern: '{theme,locales}',
+            group: 'internal'
+          }
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        warnOnUnassignedImports: true,
+        distinctGroup: true
+      }
+    ]
   }
 }
