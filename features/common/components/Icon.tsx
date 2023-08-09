@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 interface IconProps {
   name: React.ComponentProps<typeof MaterialCommunityIcons>['name']
-  color: string
+  color?: string
   size?: number
 }
 
