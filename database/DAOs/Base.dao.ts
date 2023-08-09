@@ -1,11 +1,10 @@
-import SQLiteDB from '../SQLite.database'
+import db from '../SQLite.database'
 import { type ResultSet, type ResultSetError } from 'expo-sqlite'
 
 export default class BaseDAO<T> {
   constructor(public tableName: string) {}
 
   private $truncate() {
-    const db = SQLiteDB.getInstance()
     db.exec(
       [{ sql: `delete from ${this.tableName};`, args: [] }],
       false,
@@ -22,7 +21,6 @@ export default class BaseDAO<T> {
 
   async getAll(projection: string[] = ['*']) {
     try {
-      const db = SQLiteDB.getInstance()
       const res = await db.execAsync(
         [
           {
@@ -43,7 +41,6 @@ export default class BaseDAO<T> {
 
   async getById(id: number, projection: string[] = ['*']) {
     try {
-      const db = SQLiteDB.getInstance()
       const res = await db.execAsync(
         [
           {
@@ -80,7 +77,6 @@ export default class BaseDAO<T> {
 
   dropTable(security: string) {
     if (security === this.tableName) {
-      const db = SQLiteDB.getInstance()
       db.execAsync(
         [{ sql: `drop table if exists ${this.tableName}`, args: [] }],
         false

@@ -1,5 +1,5 @@
 import BaseDAO from './Base.dao'
-import SQLiteDB from '../SQLite.database'
+import db from '../SQLite.database'
 
 import { type Food } from './Food.dao'
 import { type Ubication } from './Ubication.dao'
@@ -25,7 +25,6 @@ export default class EntryDAO extends BaseDAO<Entry> {
   }
 
   private $init() {
-    const db = SQLiteDB.getInstance()
     db.execAsync(
       [
         {
@@ -49,7 +48,6 @@ export default class EntryDAO extends BaseDAO<Entry> {
 
   async insertOne(data: Omit<Entry, 'id'>): Promise<number | undefined> {
     try {
-      const db = SQLiteDB.getInstance()
       const res = await db.execAsync(
         [
           {

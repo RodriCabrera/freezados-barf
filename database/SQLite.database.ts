@@ -2,14 +2,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 import * as SQLite from 'expo-sqlite'
 
-export default class SQLiteDB {
-  private static instance: SQLite.SQLiteDatabase
-  private constructor() {}
+const database: SQLite.SQLiteDatabase = SQLite.openDatabase('freezados.db')
 
-  static getInstance(): SQLite.SQLiteDatabase {
-    if (!SQLiteDB.instance) {
-      SQLiteDB.instance = SQLite.openDatabase('freezados.db')
-    }
-    return this.instance
-  }
-}
+export default database

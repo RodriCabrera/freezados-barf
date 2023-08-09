@@ -1,5 +1,5 @@
 import BaseDAO from './Base.dao'
-import SQLiteDB from '../SQLite.database'
+import db from '../SQLite.database'
 
 export interface User {
   id: number
@@ -17,7 +17,6 @@ export default class UserDAO extends BaseDAO<User> {
 
   private async $init() {
     try {
-      const db = SQLiteDB.getInstance()
       await db.execAsync(
         [
           {
@@ -37,7 +36,6 @@ export default class UserDAO extends BaseDAO<User> {
 
   async insertOne(data: Omit<User, 'id'>) {
     try {
-      const db = SQLiteDB.getInstance()
       const res = await db.execAsync(
         [
           {
