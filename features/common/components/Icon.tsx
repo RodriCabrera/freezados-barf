@@ -9,5 +9,9 @@ interface IconProps {
 }
 
 export const Icon = ({ name, color, size }: IconProps) => (
-  <MaterialCommunityIcons size={size ?? 28} name={name} color={color} />
+  <MaterialCommunityIcons
+    size={size ?? 28}
+    name={name}
+    color={color ?? 'black'}
+  />
 )
