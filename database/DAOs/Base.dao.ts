@@ -1,19 +1,19 @@
 import { type ResultSet, type ResultSetError } from 'expo-sqlite'
 
-import SQLiteDB from '../SQLite.database'
+import db from '../SQLite.database'
 
 export default class BaseDAO<T> {
   constructor(public tableName: string) {}
 
-  private $truncate() {
-    const db = SQLiteDB.getInstance()
-    db.exec(
-      [{ sql: `delete from ${this.tableName};`, args: [] }],
-      false,
-      (err) => {
-        err != null && console.error(err)
-      }
-    )
+  private async $truncate() {
+    try {
+      await db.transactionAsync(async (tx) => {
+        await tx.executeSqlAsync(`delete from ${this.tableName};`)
+      })
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Error al eliminar datos')
+    }
   }
 
   checkError(response: ResultSet | ResultSetError): response is ResultSet {
@@ -23,19 +23,18 @@ export default class BaseDAO<T> {
 
   async getAll(projection: string[] = ['*']) {
     try {
-      const db = SQLiteDB.getInstance()
-      const res = await db.execAsync(
-        [
-          {
-            sql: `select ${projection.join(',')} from ${this.tableName};`,
-            args: []
-          }
-        ],
-        true
-      )
-      if (this.checkError(res[0])) {
-        return res[0].rows as T[]
-      }
+      let result: T[] | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `select ${projection.join(',')} from ${this.tableName};`
+        )
+        if (this.checkError(res)) {
+          result = res.rows as T[]
+        } else {
+          result = []
+        }
+      })
+      return result
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get elements')
@@ -44,21 +43,19 @@ export default class BaseDAO<T> {
 
   async getById(id: number, projection: string[] = ['*']) {
     try {
-      const db = SQLiteDB.getInstance()
-      const res = await db.execAsync(
-        [
-          {
-            sql: `select ${projection.join(',')} from ${
-              this.tableName
-            } where id = ? limit 1;`,
-            args: [id]
-          }
-        ],
-        true
-      )
-      if (this.checkError(res[0])) {
-        return res[0].rows[0] as T
-      }
+      let result: T | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `select ${projection.join(',')} from ${
+            this.tableName
+          } where id = ? limit 1;`,
+          [id]
+        )
+        if (this.checkError(res)) {
+          result = res.rows[0] as T
+        }
+      })
+      return result
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get element')
@@ -75,17 +72,26 @@ export default class BaseDAO<T> {
     return undefined
   }
 
-  deleteAll(security: string) {
-    if (security === this.tableName) this.$truncate()
+  async deleteAll(security: string) {
+    if (security === this.tableName) {
+      await this.$truncate()
+    } else {
+      throw new Error('Wrong credentials')
+    }
   }
 
-  dropTable(security: string) {
-    if (security === this.tableName) {
-      const db = SQLiteDB.getInstance()
-      db.execAsync(
-        [{ sql: `drop table if exists ${this.tableName}`, args: [] }],
-        false
-      )
+  async dropTable(security: string) {
+    try {
+      if (security === this.tableName) {
+        await db.transactionAsync(async (tx) => {
+          await tx.executeSqlAsync(`drop table if exists ${this.tableName}`)
+        })
+      } else {
+        throw new Error('Wrong credentials')
+      }
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Failed to get element')
     }
   }
 }

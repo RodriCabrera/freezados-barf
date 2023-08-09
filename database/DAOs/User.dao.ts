@@ -1,5 +1,5 @@
 import BaseDAO from './Base.dao'
-import SQLiteDB from '../SQLite.database'
+import db from '../SQLite.database'
 
 export interface User {
   id: number
@@ -17,39 +17,29 @@ export default class UserDAO extends BaseDAO<User> {
 
   private async $init() {
     try {
-      const db = SQLiteDB.getInstance()
-      await db.execAsync(
-        [
-          {
-            sql: `create table if not exists ${TABLE_NAME} 
-                    (id integer primary key autoincrement not null, name text, email text);`,
-            args: []
-          }
-        ],
-        false
-      )
+      await db.transactionAsync(async (tx) => {
+        await tx.executeSqlAsync(`create table if not exists ${TABLE_NAME} 
+        (id integer primary key autoincrement not null, name text, email text);`)
+      })
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Error al iniciar la tabla')
     }
-    // .catch(err => console.error('Error al instanciar la tabla', err))
   }
 
   async insertOne(data: Omit<User, 'id'>) {
     try {
-      const db = SQLiteDB.getInstance()
-      const res = await db.execAsync(
-        [
-          {
-            sql: `insert into ${TABLE_NAME} (email, name) values (?, ?);`,
-            args: [data.email, data.name]
-          }
-        ],
-        false
-      )
-      if (this.checkError(res[0])) {
-        return res[0].insertId
-      }
+      let insertId: number | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `insert into ${TABLE_NAME} (email, name) values (?, ?);`,
+          [data.email ?? '', data.name ?? '']
+        )
+        if (this.checkError(res)) {
+          insertId = res.insertId
+        }
+      })
+      return insertId
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to create User')
