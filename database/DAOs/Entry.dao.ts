@@ -4,7 +4,7 @@ import { type Food } from './Food.dao'
 import { type Ubication } from './Ubication.dao'
 import { type User } from './User.dao'
 
-interface Entry {
+export interface Entry {
   id: number
   user_id: User['id']
   ubication_id: Ubication['id']
