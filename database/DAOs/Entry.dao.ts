@@ -1,6 +1,5 @@
 import BaseDAO from './Base.dao'
 import db from '../SQLite.database'
-
 import { type Food } from './Food.dao'
 import { type Ubication } from './Ubication.dao'
 import { type User } from './User.dao'

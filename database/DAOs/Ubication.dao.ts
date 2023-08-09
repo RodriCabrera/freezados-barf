@@ -1,6 +1,5 @@
 import BaseDAO from './Base.dao'
 import db from '../SQLite.database'
-
 import { type User } from './User.dao'
 
 const TABLE_NAME = 'UBICATION'

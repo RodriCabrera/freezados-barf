@@ -1,9 +1,10 @@
-import { Text, View } from './Themed'
 import { useState, useEffect } from 'react'
-import UserDAO from '../database/DAOs/User.dao'
-import FoodDAO from '../database/DAOs/Food.dao'
-import UbicationDAO from '../database/DAOs/Ubication.dao'
-import EntryDAO from '../database/DAOs/Entry.dao'
+
+import EntryDAO from '../../../database/DAOs/Entry.dao'
+import FoodDAO from '../../../database/DAOs/Food.dao'
+import UbicationDAO from '../../../database/DAOs/Ubication.dao'
+import UserDAO from '../../../database/DAOs/User.dao'
+import { Text, View } from './Themed'
 
 // function prepare() {
 //   const users = new UserDAO()

@@ -1,5 +1,7 @@
-import db from '../SQLite.database'
 import { type ResultSet, type ResultSetError } from 'expo-sqlite'
+
+import db from '../SQLite.database'
+import SQLiteDB from '../SQLite.database'
 
 export default class BaseDAO<T> {
   constructor(public tableName: string) {}
