@@ -15,7 +15,6 @@ export const Entry = ({ entry }: EntryParams) => {
         {entry.food_name} {entry.quantity}gr
       </Text>
       <Text>date_stored: {entry.date_stored}</Text>
-      <Text>taken: {entry.taken ? 'TRUE' : 'FALSE'}</Text>
       <Text>UbicationID: {entry.ubication_id}</Text>
       <Text>date_ready: {entry.date_ready}</Text>
     </View>
