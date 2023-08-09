@@ -1,7 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 import { Text, View } from '../../features/common/components/Themed'
-import { DAOTests } from '../../features/common/components/DAOTests'
+// import { DAOTests } from '../../features/common/components/DAOTests'
+import { mockEntries } from '../../database/__mocks__/EntriesMock'
+import { mockFoods } from '../../database/__mocks__/FoodsMock'
+import { mockUbications } from '../../database/__mocks__/UbicationMock'
 
 export default function TabOneScreen() {
   return (
@@ -12,7 +15,7 @@ export default function TabOneScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <DAOTests />
+      {/* <DAOTests /> */}
     </View>
   )
 }
