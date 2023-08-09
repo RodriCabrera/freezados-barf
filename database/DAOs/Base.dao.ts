@@ -20,44 +20,41 @@ export default class BaseDAO<T> {
     return true
   }
 
-  // TODO: change to transaction
   async getAll(projection: string[] = ['*']) {
     try {
-      const res = await db.execAsync(
-        [
-          {
-            sql: `select ${projection.join(',')} from ${this.tableName};`,
-            args: []
-          }
-        ],
-        true
-      )
-      if (this.checkError(res[0])) {
-        return res[0].rows as T[]
-      }
+      let result: T[] | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `select ${projection.join(',')} from ${this.tableName};`
+        )
+        if (this.checkError(res)) {
+          result = res.rows as T[]
+        } else {
+          result = []
+        }
+      })
+      return result
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get elements')
     }
   }
 
-  // TODO: change to transaction
   async getById(id: number, projection: string[] = ['*']) {
     try {
-      const res = await db.execAsync(
-        [
-          {
-            sql: `select ${projection.join(',')} from ${
-              this.tableName
-            } where id = ? limit 1;`,
-            args: [id]
-          }
-        ],
-        true
-      )
-      if (this.checkError(res[0])) {
-        return res[0].rows[0] as T
-      }
+      let result: T | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `select ${projection.join(',')} from ${
+            this.tableName
+          } where id = ? limit 1;`,
+          [id]
+        )
+        if (this.checkError(res)) {
+          result = res.rows[0] as T
+        }
+      })
+      return result
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Failed to get element')
