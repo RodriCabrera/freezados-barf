@@ -18,14 +18,17 @@ export const useEntries = () => {
 
   useEffect(() => {
     entries.getAll().then((res) => {
-      const parsedEntries = res?.map((entry) => {
+      const entriesWithFoodName = res?.map((entry) => {
         const food = allFoods?.find((food) => food.id === entry.food_id)
         return {
           ...entry,
           food_name: food?.name
         }
       })
-      setAllEntries(parsedEntries)
+      const notTakenEntries = entriesWithFoodName?.filter(
+        (entry) => !entry.taken
+      )
+      setAllEntries(notTakenEntries)
     })
   }, [allFoods])
 
