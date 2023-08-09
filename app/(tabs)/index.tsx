@@ -17,7 +17,7 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    flex: 1
+    flex: 1,
+    padding: 20
   }
 })
