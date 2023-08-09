@@ -4,14 +4,15 @@ import { type ResultSet, type ResultSetError } from 'expo-sqlite'
 export default class BaseDAO<T> {
   constructor(public tableName: string) {}
 
-  private $truncate() {
-    db.exec(
-      [{ sql: `delete from ${this.tableName};`, args: [] }],
-      false,
-      (err) => {
-        err != null && console.error(err)
-      }
-    )
+  private async $truncate() {
+    try {
+      await db.transactionAsync(async (tx) => {
+        await tx.executeSqlAsync(`delete from ${this.tableName};`)
+      })
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Error al eliminar datos')
+    }
   }
 
   checkError(response: ResultSet | ResultSetError): response is ResultSet {
@@ -19,6 +20,7 @@ export default class BaseDAO<T> {
     return true
   }
 
+  // TODO: change to transaction
   async getAll(projection: string[] = ['*']) {
     try {
       const res = await db.execAsync(
@@ -39,6 +41,7 @@ export default class BaseDAO<T> {
     }
   }
 
+  // TODO: change to transaction
   async getById(id: number, projection: string[] = ['*']) {
     try {
       const res = await db.execAsync(
@@ -71,16 +74,26 @@ export default class BaseDAO<T> {
     return undefined
   }
 
-  deleteAll(security: string) {
-    if (security === this.tableName) this.$truncate()
+  async deleteAll(security: string) {
+    if (security === this.tableName) {
+      await this.$truncate()
+    } else {
+      throw new Error('Wrong credentials')
+    }
   }
 
-  dropTable(security: string) {
-    if (security === this.tableName) {
-      db.execAsync(
-        [{ sql: `drop table if exists ${this.tableName}`, args: [] }],
-        false
-      )
+  async dropTable(security: string) {
+    try {
+      if (security === this.tableName) {
+        await db.transactionAsync(async (tx) => {
+          await tx.executeSqlAsync(`drop table if exists ${this.tableName}`)
+        })
+      } else {
+        throw new Error('Wrong credentials')
+      }
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Failed to get element')
     }
   }
 }
