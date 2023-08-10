@@ -3,22 +3,13 @@ import { useEffect, useState } from 'react'
 
 import { View } from '../../common/components/Themed'
 import EntryDAO, { type EntryFull } from '../../../database/DAOs/Entry.dao'
-import FoodDAO, { type Food } from '../../../database/DAOs/Food.dao'
 import { Entry } from './Entry'
 import { useCurrentUser } from '../../common/hooks/useCurrentUser'
 
 export const EntriesList = () => {
   const entries = new EntryDAO()
-  const food = new FoodDAO()
   const [allEntries, setAllEntries] = useState<EntryFull[]>()
-  const [allFoods, setAllFoods] = useState<Food[]>()
   const { id: userId } = useCurrentUser()
-
-  useEffect(() => {
-    food.getAll().then((res) => {
-      setAllFoods(res)
-    })
-  }, [])
 
   useEffect(() => {
     if (userId) {
@@ -26,7 +17,7 @@ export const EntriesList = () => {
         setAllEntries(res)
       })
     }
-  }, [allFoods, userId])
+  }, [userId])
 
   return (
     <View style={styles.container}>
