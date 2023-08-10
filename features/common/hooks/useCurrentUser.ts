@@ -9,7 +9,7 @@ export function useCurrentUser() {
 
   useEffect(() => {
     users.getAll().then((result) => {
-      if (result) setUser(result[0])
+      if (result) setUser(result[0]) // For the moment there will be only one user
     })
   }, [])
 
