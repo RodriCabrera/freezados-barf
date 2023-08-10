@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { View } from '../../common/components/Themed'
 import EntryDAO, {
+  type EntryFull,
   type Entry as EntryType
 } from '../../../database/DAOs/Entry.dao'
 import FoodDAO, { type Food } from '../../../database/DAOs/Food.dao'
@@ -11,8 +12,7 @@ import { Entry } from './Entry'
 export const EntriesList = () => {
   const entries = new EntryDAO()
   const food = new FoodDAO()
-  const [allEntries, setAllEntries] =
-    useState<Array<EntryType & { food_name: string | undefined }>>()
+  const [allEntries, setAllEntries] = useState<EntryFull[]>()
   const [allFoods, setAllFoods] = useState<Food[]>()
 
   useEffect(() => {
@@ -22,18 +22,8 @@ export const EntriesList = () => {
   }, [])
 
   useEffect(() => {
-    entries.getAll().then((res) => {
-      const entriesWithFoodName = res?.map((entry) => {
-        const food = allFoods?.find((food) => food.id === entry.food_id)
-        return {
-          ...entry,
-          food_name: food?.name
-        }
-      })
-      const notTakenEntries = entriesWithFoodName?.filter(
-        (entry) => !entry.taken
-      )
-      setAllEntries(notTakenEntries)
+    entries.getAllEntriesByUser(1).then((res) => {
+      setAllEntries(res)
     })
   }, [allFoods])
 
