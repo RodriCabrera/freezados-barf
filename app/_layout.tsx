@@ -58,7 +58,7 @@ function RootLayoutNav({ onLayoutRootView }: any) {
           />
           <Stack.Screen
             name="modal/add-ubication"
-            options={{ presentation: 'modal', title: 'Tiempo de congelado' }}
+            options={{ presentation: 'modal', title: 'Nueva ubicación' }}
           />
         </Stack>
       </View>
