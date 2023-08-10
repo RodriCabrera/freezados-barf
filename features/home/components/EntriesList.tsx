@@ -1,10 +1,10 @@
-import { FlatList, StyleSheet } from 'react-native'
 import { useEffect, useState } from 'react'
+import { FlatList, StyleSheet } from 'react-native'
 
 import { View } from '../../common/components/Themed'
 import EntryDAO, { type EntryFull } from '../../../database/DAOs/Entry.dao'
-import { Entry } from './Entry'
 import { useCurrentUser } from '../../common/hooks/useCurrentUser'
+import { Entry } from './Entry'
 
 export const EntriesList = () => {
   const entries = new EntryDAO()
