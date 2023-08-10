@@ -47,6 +47,7 @@ module.exports = {
     'react-native/no-inline-styles': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     'react-native/no-color-literals': 'off',
+    '@typescript-eslint/naming-convention': 'off',
     'import/order': [
       'error',
       {
