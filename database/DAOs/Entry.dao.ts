@@ -15,6 +15,17 @@ export interface Entry {
   taken: boolean
 }
 
+export interface EntryFull {
+  id: number
+  user_id: User['id']
+  Ubication: Omit<Ubication, 'user_id'>
+  Food: Omit<Food, 'user_id'>
+  date_stored?: number
+  date_ready?: number
+  quantity: number
+  taken: boolean
+}
+
 const TABLE_NAME = 'ENTRY'
 
 export default class EntryDAO extends BaseDAO<Entry> {
@@ -66,6 +77,85 @@ export default class EntryDAO extends BaseDAO<Entry> {
     } catch (err) {
       if (err instanceof Error) throw err
       throw new Error('Error al insertar elemento')
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private normalizeFullEntry(row: Record<string, any>): EntryFull {
+    return {
+      id: row.id,
+      taken: row.taken,
+      quantity: row.quantity,
+      user_id: row.user_id,
+      Food: {
+        id: row.food_id,
+        name: row.food_name,
+        species: row.food_species,
+        description: row.food_description
+      },
+      Ubication: {
+        id: row.ubication_id,
+        name: row.ubication_name,
+        isFreezer: !!row.ubication_type,
+        description: row.ubication_description,
+        ubication: row.ubication_ubication
+      },
+      date_ready: row.date_ready,
+      date_stored: row.date_stored
+    }
+  }
+
+  async getAllEntriesByUser(id: User['id']) {
+    try {
+      let response: EntryFull[] | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `
+          select e.*, u.name as ubication_name, u.isFreezer as ubication_type, 
+            u.description as ubication_description, u.ubication as ubication_ubication,
+            f.name as food_name, f.description as food_description, f.species as food_species
+          from entry as e inner join food as f on e.food_id = f.id 
+          inner join ubication as u on e.ubication_id = u.id 
+          where e.user_id = ? and e.taken = 0
+          order by e.date_ready
+        `,
+          [id]
+        )
+        if (this.checkError(res)) {
+          response = res.rows.map((row) => this.normalizeFullEntry(row))
+        }
+      }, true)
+      return response
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Error al obtener entradas')
+    }
+  }
+
+  async getFullEntryById(id: Entry['id']) {
+    try {
+      let response: EntryFull | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          `
+          select e.*, u.name as ubication_name, u.isFreezer as ubication_type, 
+            u.description as ubication_description, u.ubication as ubication_ubication,
+            f.name as food_name, f.description as food_description, f.species as food_species
+          from entry as e inner join food as f on e.food_id = f.id 
+          inner join ubication as u on e.ubication_id = u.id 
+          where e.id = ?
+          order by e.date_ready
+        `,
+          [id]
+        )
+        if (this.checkError(res)) {
+          response = this.normalizeFullEntry(res.rows[0])
+        }
+      }, true)
+      return response
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Error al obtener entradas')
     }
   }
 }
