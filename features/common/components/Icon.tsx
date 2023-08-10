@@ -1,18 +1,17 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-export const TabBarIcon = ({
-  name,
-  color,
-  size
-}: {
+// MaterialCommunityIcons list: https://icons.expo.fyi/
+
+interface IconProps {
   name: React.ComponentProps<typeof MaterialCommunityIcons>['name']
-  color: string
+  color?: string
   size?: number
-}) => (
+}
+
+export const Icon = ({ name, color, size }: IconProps) => (
   <MaterialCommunityIcons
-    style={{ marginBottom: -3 }}
     size={size ?? 28}
     name={name}
-    color={color}
+    color={color ?? 'black'}
   />
 )

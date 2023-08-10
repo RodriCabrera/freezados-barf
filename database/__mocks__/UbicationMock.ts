@@ -16,5 +16,21 @@ export const mockUbications: Ubication[] = [
     ubication: 'Lacroze 111',
     user_id: 1,
     description: 'Freezer espacioso tipo baul'
+  },
+  {
+    id: 3,
+    name: 'Frigobar',
+    isFreezer: false,
+    ubication: 'Lacroze 111',
+    user_id: 1,
+    description: 'Freezer espacioso tipo baul'
+  },
+  {
+    id: 4,
+    name: 'Freezer roto',
+    isFreezer: true,
+    ubication: 'Lacroze 111',
+    user_id: 1,
+    description: 'Freezer espacioso tipo baul'
   }
 ]

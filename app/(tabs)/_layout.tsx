@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, useColorScheme } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import Colors from '../../constants/Colors'
-import { TabBarIcon } from '../../features/common/components/TabBarIcon'
+import { Icon } from '../../features/common/components/Icon'
 
 const TabLayout = () => {
   const colorScheme = useColorScheme()
@@ -29,7 +29,7 @@ const TabLayout = () => {
         name="index"
         options={{
           title: 'Listado',
-          tabBarIcon: ({ color }) => <TabBarIcon name="fridge" color={color} />,
+          tabBarIcon: ({ color }) => <Icon name="fridge" color={color} />,
           headerRight: () => (
             <Link href="modal/species" asChild>
               <Pressable>
@@ -51,7 +51,7 @@ const TabLayout = () => {
         options={{
           title: 'Guardar nuevo',
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="plus-circle" color={color} size={55} />
+            <Icon name="plus-circle" color={color} size={55} />
           )
         }}
       />
@@ -59,7 +59,7 @@ const TabLayout = () => {
         name="history"
         options={{
           title: 'Alimentos',
-          tabBarIcon: ({ color }) => <TabBarIcon name="history" color={color} />
+          tabBarIcon: ({ color }) => <Icon name="history" color={color} />
         }}
       />
     </Tabs>
