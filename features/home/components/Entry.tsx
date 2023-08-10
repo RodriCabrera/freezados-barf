@@ -1,4 +1,3 @@
-import React from 'react'
 import { StyleSheet } from 'react-native'
 
 import { Text, View } from '../../common/components/Themed'
@@ -9,18 +8,17 @@ interface EntryParams {
 }
 
 export const Entry = ({ entry }: EntryParams) => {
+  const { Food, Ubication, id, quantity, date_ready, date_stored } = entry
   return (
     <View style={styles.container}>
-      <Text key={entry.id} style={styles.header}>
-        {entry.Food.name} ({entry.Food.species}) {entry.quantity}gr
+      <Text key={id} style={styles.header}>
+        {Food.name} ({Food.species}) {quantity}gr
       </Text>
-      <Text>date_stored: {entry.date_stored}</Text>
-      <Text>UbicationID: {entry.Ubication.id}</Text>
-      <Text>UbicationName: {entry.Ubication.name}</Text>
-      <Text>
-        UbicationType: {entry.Ubication.isFreezer ? 'other' : 'freezer'}
-      </Text>
-      <Text>date_ready: {entry.date_ready}</Text>
+      <Text>date_stored: {date_stored}</Text>
+      <Text>UbicationID: {Ubication.id}</Text>
+      <Text>UbicationName: {Ubication.name}</Text>
+      <Text>UbicationType: {Ubication.isFreezer ? 'other' : 'freezer'}</Text>
+      <Text>date_ready: {date_ready}</Text>
     </View>
   )
 }
