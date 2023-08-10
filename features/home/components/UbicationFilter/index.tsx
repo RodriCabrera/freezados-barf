@@ -1,16 +1,15 @@
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native'
 
-import { useUbications } from '../../hooks/useUbications'
 import { Item } from './Item'
+import { mockUbications } from '../../../../database/__mocks__/UbicationMock'
 
 export const UbicationFilter = () => {
-  const { ubications } = useUbications()
   return (
     <SafeAreaView>
       <FlatList
         horizontal
         style={styles.container}
-        data={[...ubications, { id: 'add', name: 'ADD' }]}
+        data={[...mockUbications, { id: 'add', name: 'ADD' }]}
         renderItem={({ item }) => (
           <Item name={item.name} add={item.name === 'ADD'} />
         )}
