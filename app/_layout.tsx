@@ -56,6 +56,10 @@ function RootLayoutNav({ onLayoutRootView }: any) {
             name="modal/species"
             options={{ presentation: 'modal', title: 'Tiempo de congelado' }}
           />
+          <Stack.Screen
+            name="modal/add-ubication"
+            options={{ presentation: 'modal', title: 'Nueva ubicación' }}
+          />
         </Stack>
       </View>
     </ThemeProvider>
