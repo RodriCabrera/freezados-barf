@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 import { Text, View } from '../../features/common/components/Themed'
 
-export default function TabTwoScreen() {
+export default function AddEntryTab() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Guardar un alimento</Text>
