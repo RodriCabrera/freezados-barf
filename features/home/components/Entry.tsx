@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native'
+import { Button } from '@rneui/base'
+import { router } from 'expo-router'
 
 import { Icon } from '../../common/components/Icon'
 import { Text, View } from '../../common/components/Themed'
@@ -19,47 +21,78 @@ export const Entry = ({ entry }: EntryParams) => {
     date_stored,
     date_consumed
   } = entry
+
+  const isReady = (date_ready: number | undefined) => {
+    const now = new Date().getTime()
+    return date_ready ? date_ready <= now : false
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.mainContent}>
-        <View style={styles.icon}>
-          <Icon name={SPECIES_ICONS_MAP[Food.species]} />
+      <View style={styles.body} key={id}>
+        <View style={styles.mainContent}>
+          <View style={styles.icon}>
+            <Icon
+              name={SPECIES_ICONS_MAP[Food.species]}
+              color={isReady(date_ready) ? 'green' : 'tomato'}
+            />
+          </View>
+          <Text key={id} style={styles.header}>
+            {Food.name} {quantity}gr
+          </Text>
         </View>
-        <Text key={id} style={styles.header}>
-          {Food.name} {quantity}gr
-        </Text>
+        <View>
+          <Text>
+            date_stored:
+            {date_stored &&
+              new Date(date_stored).toLocaleDateString(undefined, DATE_OPTIONS)}
+          </Text>
+          <Text>In {Ubication.name}</Text>
+          <Text>
+            UbicationType: {Ubication.isFreezer ? 'other' : 'freezer'}
+          </Text>
+          <Text>
+            date_ready:{' '}
+            {date_ready &&
+              new Date(date_ready).toLocaleDateString(undefined, DATE_OPTIONS)}
+          </Text>
+          <Text>
+            date_consumed:{' '}
+            {date_consumed &&
+              new Date(date_consumed).toLocaleDateString(
+                undefined,
+                DATE_OPTIONS
+              )}
+          </Text>
+        </View>
       </View>
-      <View>
-        <Text>
-          date_stored:
-          {date_stored &&
-            new Date(date_stored).toLocaleDateString(undefined, DATE_OPTIONS)}
-        </Text>
-        <Text>In {Ubication.name}</Text>
-        <Text>UbicationType: {Ubication.isFreezer ? 'other' : 'freezer'}</Text>
-        <Text>
-          date_ready:{' '}
-          {date_ready &&
-            new Date(date_ready).toLocaleDateString(undefined, DATE_OPTIONS)}
-        </Text>
-        <Text>
-          date_consumed:{' '}
-          {date_consumed &&
-            new Date(date_consumed).toLocaleDateString(undefined, DATE_OPTIONS)}
-        </Text>
-      </View>
+      <Button
+        buttonStyle={{ borderColor: 'black' }}
+        type="outline"
+        onPress={() => {
+          router.push({ pathname: 'modal/consume', params: { id } })
+        }}
+      >
+        <Text>Usar</Text>
+      </Button>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  body: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   container: {
-    backgroundColor: '#FFE5F9',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
     gap: 1,
+    justifyContent: 'space-between',
     padding: 5
   },
   header: {
-    color: 'red',
     fontSize: 20,
     fontWeight: 'bold'
   },
