@@ -14,7 +14,8 @@ export const mockEntries: Entry[] = [
     quantity: 1500,
     taken: false,
     date_stored: Date.now(),
-    date_ready: Date.now() + 1000 * 60 * 60 * 24
+    date_ready: Date.now() + 1000 * 60 * 60 * 24,
+    date_consumed: null
   },
   {
     id: 2,
@@ -24,7 +25,8 @@ export const mockEntries: Entry[] = [
     quantity: 1000,
     taken: false,
     date_stored: Date.now(),
-    date_ready: Date.now() + 1000 * 60 * 60 * 24
+    date_ready: Date.now() + 1000 * 60 * 60 * 24,
+    date_consumed: null
   },
   {
     id: 3,
@@ -34,7 +36,8 @@ export const mockEntries: Entry[] = [
     quantity: 2000,
     taken: false,
     date_stored: Date.now() - 1000 * 60 * 60 * 24,
-    date_ready: Date.now() - 1000 * 60
+    date_ready: Date.now() - 1000 * 60,
+    date_consumed: Date.now()
   }
 ]
 

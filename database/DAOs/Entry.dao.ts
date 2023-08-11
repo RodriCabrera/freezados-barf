@@ -11,7 +11,7 @@ export interface Entry {
   food_id: Food['id']
   date_stored?: number
   date_ready?: number
-  date_consumed?: number
+  date_consumed?: number | null
   quantity: number
   taken: boolean
 }
@@ -23,7 +23,7 @@ export interface EntryFull {
   Food: Omit<Food, 'user_id'>
   date_stored?: number
   date_ready?: number
-  date_consumed?: number
+  date_consumed?: number | null
   quantity: number
   taken: boolean
 }
