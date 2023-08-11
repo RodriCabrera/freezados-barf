@@ -1,24 +1,12 @@
 import { StyleSheet } from 'react-native'
 
-import { Icon, type IconProps } from '../../common/components/Icon'
+import { Icon } from '../../common/components/Icon'
 import { Text, View } from '../../common/components/Themed'
 import { type EntryFull } from '../../../database/DAOs/Entry.dao'
-import { type Food } from '../../../database/DAOs/Food.dao'
+import { DATE_OPTIONS, SPECIES_ICONS_MAP } from '../constants'
 
 interface EntryParams {
   entry: EntryFull
-}
-
-const ICON_MAP: Record<Food['species'], IconProps['name']> = {
-  AVIAR: 'food-drumstick',
-  BOVINE: 'cow',
-  FISH: 'fish',
-  PIG: 'pig-variant'
-}
-
-const dateOptions: Intl.DateTimeFormatOptions = {
-  day: 'numeric',
-  month: 'short'
 }
 
 export const Entry = ({ entry }: EntryParams) => {
@@ -35,7 +23,7 @@ export const Entry = ({ entry }: EntryParams) => {
     <View style={styles.container}>
       <View style={styles.mainContent}>
         <View style={styles.icon}>
-          <Icon name={ICON_MAP[Food.species]} />
+          <Icon name={SPECIES_ICONS_MAP[Food.species]} />
         </View>
         <Text key={id} style={styles.header}>
           {Food.name} {quantity}gr
@@ -45,19 +33,19 @@ export const Entry = ({ entry }: EntryParams) => {
         <Text>
           date_stored:
           {date_stored &&
-            new Date(date_stored).toLocaleDateString(undefined, dateOptions)}
+            new Date(date_stored).toLocaleDateString(undefined, DATE_OPTIONS)}
         </Text>
         <Text>In {Ubication.name}</Text>
         <Text>UbicationType: {Ubication.isFreezer ? 'other' : 'freezer'}</Text>
         <Text>
           date_ready:{' '}
           {date_ready &&
-            new Date(date_ready).toLocaleDateString(undefined, dateOptions)}
+            new Date(date_ready).toLocaleDateString(undefined, DATE_OPTIONS)}
         </Text>
         <Text>
           date_consumed:{' '}
           {date_consumed &&
-            new Date(date_consumed).toLocaleDateString(undefined, dateOptions)}
+            new Date(date_consumed).toLocaleDateString(undefined, DATE_OPTIONS)}
         </Text>
       </View>
     </View>
