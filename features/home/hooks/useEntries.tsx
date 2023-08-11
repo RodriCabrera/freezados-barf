@@ -13,7 +13,7 @@ export const useEntries = () => {
   //   }
   // }, [userId])
 
-  const entriesByReady = mockEntriesFull.sort((a, b) => {
+  const entriesByReadiness = mockEntriesFull.sort((a, b) => {
     if (a.date_ready && b.date_ready) {
       return a.date_ready - b.date_ready
     } else if (a.date_ready && !b.date_ready) {
@@ -24,5 +24,5 @@ export const useEntries = () => {
       return 0
     }
   })
-  return { entries: entriesByReady }
+  return { entries: entriesByReadiness }
 }
