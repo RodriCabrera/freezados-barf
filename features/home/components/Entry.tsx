@@ -33,14 +33,17 @@ export const Entry = ({ entry }: EntryParams) => {
   } = entry
   return (
     <View style={styles.container}>
-      <View style={styles.icon}>
-        <Icon name={ICON_MAP[Food.species]} />
+      <View style={styles.mainContent}>
+        <View style={styles.icon}>
+          <Icon name={ICON_MAP[Food.species]} />
+        </View>
+        <Text key={id} style={styles.header}>
+          {Food.name} {quantity}gr
+        </Text>
       </View>
-      <Text key={id} style={styles.header}>
-        {Food.name} {quantity}gr
-      </Text>
       <View>
         <Text>
+          date_stored:
           {date_stored &&
             new Date(date_stored).toLocaleDateString(undefined, dateOptions)}
         </Text>
@@ -51,7 +54,11 @@ export const Entry = ({ entry }: EntryParams) => {
           {date_ready &&
             new Date(date_ready).toLocaleDateString(undefined, dateOptions)}
         </Text>
-        <Text>date_consumed: {date_consumed}</Text>
+        <Text>
+          date_consumed:{' '}
+          {date_consumed &&
+            new Date(date_consumed).toLocaleDateString(undefined, dateOptions)}
+        </Text>
       </View>
     </View>
   )
@@ -60,7 +67,6 @@ export const Entry = ({ entry }: EntryParams) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'pink',
-    flexDirection: 'row',
     gap: 1,
     padding: 5
   },
@@ -72,5 +78,11 @@ const styles = StyleSheet.create({
   icon: {
     backgroundColor: 'transparent',
     padding: 5
+  },
+  mainContent: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    width: '100%'
   }
 })
