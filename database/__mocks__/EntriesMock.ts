@@ -38,6 +38,28 @@ export const mockEntries: Entry[] = [
     date_stored: Date.now() - 1000 * 60 * 60 * 24,
     date_ready: Date.now() - 1000 * 60,
     date_consumed: Date.now()
+  },
+  {
+    id: 4,
+    user_id: 1,
+    ubication_id: 2,
+    food_id: 3,
+    quantity: 2000,
+    taken: false,
+    date_stored: Date.now() - 1000 * 60 * 60 * 24,
+    date_ready: Date.now() - 1000 * 60,
+    date_consumed: Date.now()
+  },
+  {
+    id: 5,
+    user_id: 1,
+    ubication_id: 2,
+    food_id: 4,
+    quantity: 2000,
+    taken: false,
+    date_stored: Date.now() - 1000 * 60 * 60 * 24,
+    date_ready: Date.now() - 1000 * 60,
+    date_consumed: Date.now()
   }
 ]
 
