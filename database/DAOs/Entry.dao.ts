@@ -68,7 +68,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
             data.user_id,
             data.quantity,
             data.date_stored ?? Date.now(),
-            data.date_ready ?? 'NULL'
+            data.date_ready ?? 0
           ]
         )
         if (this.checkError(res)) {

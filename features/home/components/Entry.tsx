@@ -8,7 +8,15 @@ interface EntryParams {
 }
 
 export const Entry = ({ entry }: EntryParams) => {
-  const { Food, Ubication, id, quantity, date_ready, date_stored } = entry
+  const {
+    Food,
+    Ubication,
+    id,
+    quantity,
+    date_ready,
+    date_stored,
+    date_consumed
+  } = entry
   return (
     <View style={styles.container}>
       <Text key={id} style={styles.header}>
@@ -19,6 +27,7 @@ export const Entry = ({ entry }: EntryParams) => {
       <Text>UbicationName: {Ubication.name}</Text>
       <Text>UbicationType: {Ubication.isFreezer ? 'other' : 'freezer'}</Text>
       <Text>date_ready: {date_ready}</Text>
+      <Text>date_consumed: {date_consumed}</Text>
     </View>
   )
 }
