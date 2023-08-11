@@ -22,7 +22,15 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 }
 
 export const Entry = ({ entry }: EntryParams) => {
-  const { Food, Ubication, id, quantity, date_ready, date_stored } = entry
+  const {
+    Food,
+    Ubication,
+    id,
+    quantity,
+    date_ready,
+    date_stored,
+    date_consumed
+  } = entry
   return (
     <View style={styles.container}>
       <View style={styles.icon}>
@@ -43,6 +51,7 @@ export const Entry = ({ entry }: EntryParams) => {
           {date_ready &&
             new Date(date_ready).toLocaleDateString(undefined, dateOptions)}
         </Text>
+        <Text>date_consumed: {date_consumed}</Text>
       </View>
     </View>
   )

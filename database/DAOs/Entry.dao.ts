@@ -11,6 +11,7 @@ export interface Entry {
   food_id: Food['id']
   date_stored?: number
   date_ready?: number
+  date_consumed?: number | null
   quantity: number
   taken: boolean
 }
@@ -22,6 +23,7 @@ export interface EntryFull {
   Food: Omit<Food, 'user_id'>
   date_stored?: number
   date_ready?: number
+  date_consumed?: number | null
   quantity: number
   taken: boolean
 }
@@ -41,8 +43,8 @@ export default class EntryDAO extends BaseDAO<Entry> {
         (id integer primary key autoincrement not null,  
             user_id integer, ubication_id integer,
             food_id integer, date_stored integer,
-            date_ready integer, quantity integer,
-            taken integer default 0,
+            date_ready integer default NULL, quantity integer,
+            taken integer default 0, date_consumed integer default NULL,
          foreign key(user_id) references USER(id),
          foreign key(ubication_id) references UBICATION(id),
          foreign key(food_id) references FOOD(id));`)
@@ -66,7 +68,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
             data.user_id,
             data.quantity,
             data.date_stored ?? Date.now(),
-            data.date_ready ?? ''
+            data.date_ready ?? 0
           ]
         )
         if (this.checkError(res)) {
@@ -101,7 +103,8 @@ export default class EntryDAO extends BaseDAO<Entry> {
         ubication: row.ubication_ubication
       },
       date_ready: row.date_ready,
-      date_stored: row.date_stored
+      date_stored: row.date_stored,
+      date_consumed: row.date_consumed
     }
   }
 
@@ -116,7 +119,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
             f.name as food_name, f.description as food_description, f.species as food_species
           from entry as e inner join food as f on e.food_id = f.id 
           inner join ubication as u on e.ubication_id = u.id 
-          where e.user_id = ? and e.taken = 0
+          where e.user_id = ? and e.taken = 0 and e.date_consumed is null
           order by e.date_ready
         `,
           [id]
