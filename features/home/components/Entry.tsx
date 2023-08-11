@@ -54,7 +54,7 @@ export const Entry = ({ entry }: EntryParams) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'pink',
+    backgroundColor: '#FFE5F9',
     gap: 1,
     padding: 5
   },
