@@ -164,7 +164,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
 
   async consumeEntry(id: Entry['id'], quantity: Entry['quantity']) {
     try {
-      let response: EntryFull | undefined
+      let response
       await db.transactionAsync(async (tx) => {
         const res = await tx.executeSqlAsync(
           // if the consumed-quantity = quantity, then set quantity=0 and update the date_consumed
@@ -181,7 +181,7 @@ export default class EntryDAO extends BaseDAO<Entry> {
           [id, quantity]
         )
         if (this.checkError(res)) {
-          response = this.normalizeFullEntry(res.rows[0])
+          response = res
         }
       }, false)
       return response
