@@ -167,9 +167,9 @@ export default class EntryDAO extends BaseDAO<Entry> {
       let response: EntryFull | undefined
       await db.transactionAsync(async (tx) => {
         const res = await tx.executeSqlAsync(
-          // if the quantity is the same as the quantity from the entry, then update the date_consumed
-          // if the quantity is less than the quantity from the entry, then update the quantity.
-          // if the quantity is greater than the quantity from the entry, then throw an error
+          // if the consumed-quantity = quantity, then set quantity=0 and update the date_consumed
+          // if the consumed-quantity < the quantity, then update the quantity.
+          // if the consumed-quantity > the quantity, then throw an error
           `UPDATE entry 
            SET 
            quantity = CASE WHEN quantity = ? THEN 0 
