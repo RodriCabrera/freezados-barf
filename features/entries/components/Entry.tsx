@@ -22,10 +22,7 @@ export const Entry = ({ entry }: EntryParams) => {
     date_consumed
   } = entry
 
-  const isReady = (date_ready: number | undefined) => {
-    const now = new Date().getTime()
-    return date_ready ? date_ready <= now : false
-  }
+  const isReady = date_ready ? date_ready <= new Date().getTime() : false
 
   return (
     <View style={styles.container}>
@@ -34,7 +31,7 @@ export const Entry = ({ entry }: EntryParams) => {
           <View style={styles.icon}>
             <Icon
               name={SPECIES_ICONS_MAP[Food.species]}
-              color={isReady(date_ready) ? 'green' : 'tomato'}
+              color={isReady ? 'green' : 'tomato'}
             />
           </View>
           <Text key={id} style={styles.header}>
@@ -66,15 +63,17 @@ export const Entry = ({ entry }: EntryParams) => {
           </Text>
         </View>
       </View>
-      <Button
-        buttonStyle={{ borderColor: 'black' }}
-        type="outline"
-        onPress={() => {
-          router.push({ pathname: 'modal/consume', params: { id } })
-        }}
-      >
-        <Text>Usar</Text>
-      </Button>
+      {isReady && (
+        <Button
+          buttonStyle={{ borderColor: 'black' }}
+          type="outline"
+          onPress={() => {
+            router.push({ pathname: 'modal/consume', params: { id } })
+          }}
+        >
+          <Text>Usar</Text>
+        </Button>
+      )}
     </View>
   )
 }
