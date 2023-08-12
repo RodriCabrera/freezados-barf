@@ -5,6 +5,8 @@ import { Button } from '@rneui/base'
 
 import { Text, View } from '../../features/common/components/Themed'
 import { useEntry } from '../../features/entries/hooks/useEntry'
+import { Icon } from '../../features/common/components/Icon'
+import { SPECIES_ICONS_MAP } from '../../features/entries/constants'
 
 export default function ConsumeModal() {
   const [quantity, setQuantity] = useState<string>()
@@ -29,6 +31,13 @@ export default function ConsumeModal() {
 
   return (
     <View style={styles.container}>
+      {entry && (
+        <Icon
+          name={SPECIES_ICONS_MAP[entry.Food.species]}
+          color="pink"
+          size={90}
+        />
+      )}
       <View style={styles.entryLine}>
         <Text style={styles.title}>Usar:</Text>
         <Text style={styles.subtitle}>{entry?.Food.name}</Text>
