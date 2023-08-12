@@ -62,7 +62,7 @@ function RootLayoutNav({ onLayoutRootView }: any) {
           />
           <Stack.Screen
             name="modal/consume"
-            options={{ presentation: 'modal', title: 'Nueva ubicación' }}
+            options={{ presentation: 'modal', title: 'Usar alimento' }}
           />
         </Stack>
       </View>
