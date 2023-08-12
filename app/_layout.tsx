@@ -60,6 +60,10 @@ function RootLayoutNav({ onLayoutRootView }: any) {
             name="modal/add-ubication"
             options={{ presentation: 'modal', title: 'Nueva ubicación' }}
           />
+          <Stack.Screen
+            name="modal/consume"
+            options={{ presentation: 'modal', title: 'Usar alimento' }}
+          />
         </Stack>
       </View>
     </ThemeProvider>

@@ -6,14 +6,15 @@ import { Text } from '../Themed'
 
 export const LinkButton = ({
   href,
-  children
-}: PropsWithChildren<{ href: string }>) => {
+  children,
+  ...props
+}: PropsWithChildren<any>) => {
   const navigate = (href: string) => () => {
     router.push(href)
   }
   const handlePress = navigate(href)
   return (
-    <Button onPress={handlePress} type="clear">
+    <Button onPress={handlePress} type="clear" {...props}>
       <Text style={{ fontSize: 16 }}>{children}</Text>
     </Button>
   )
