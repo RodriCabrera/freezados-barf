@@ -1,10 +1,10 @@
 import { mockEntriesFull } from '../../../database/__mocks__/EntriesMock'
 
-interface useEntryParams {
+interface useGetEntryParams {
   id: number
 }
 
-export const useEntry = ({ id }: useEntryParams) => {
+export const useGetEntry = ({ id }: useGetEntryParams) => {
   const entry = mockEntriesFull.find((entry) => entry.id === id)
 
   return { entry }

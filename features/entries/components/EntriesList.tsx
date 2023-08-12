@@ -2,10 +2,10 @@ import { FlatList, StyleSheet } from 'react-native'
 
 import { View } from '../../common/components/Themed'
 import { Entry } from './Entry'
-import { useEntries } from '../hooks/useEntries'
+import { useGetEntries } from '../hooks/useGetEntries'
 
 export const EntriesList = () => {
-  const { entries } = useEntries()
+  const { entries } = useGetEntries()
 
   return (
     <View style={styles.container}>

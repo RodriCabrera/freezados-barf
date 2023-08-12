@@ -73,6 +73,8 @@ export default class EntryDAO extends BaseDAO<Entry> {
         )
         if (this.checkError(res)) {
           insertId = res.insertId
+        } else {
+          throw new Error('Error al insertar elemento')
         }
       })
       return insertId
@@ -119,13 +121,15 @@ export default class EntryDAO extends BaseDAO<Entry> {
             f.name as food_name, f.description as food_description, f.species as food_species
           from entry as e inner join food as f on e.food_id = f.id 
           inner join ubication as u on e.ubication_id = u.id 
-          where e.user_id = ? and e.taken = 0 and e.date_consumed is null
+          where e.user_id = ? and e.taken = 0 
           order by e.date_ready
         `,
           [id]
         )
         if (this.checkError(res)) {
           response = res.rows.map((row) => this.normalizeFullEntry(row))
+        } else {
+          throw new Error()
         }
       }, true)
       return response

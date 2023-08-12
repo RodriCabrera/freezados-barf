@@ -4,7 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { Button } from '@rneui/base'
 
 import { Text, View } from '../../features/common/components/Themed'
-import { useEntry } from '../../features/entries/hooks/useEntry'
+import { useGetEntry } from '../../features/entries/hooks/useGetEntry'
 import { Icon } from '../../features/common/components/Icon'
 import { SPECIES_ICONS_MAP } from '../../features/entries/constants'
 
@@ -12,7 +12,7 @@ export default function ConsumeModal() {
   const [quantity, setQuantity] = useState<string>()
 
   const { id } = useLocalSearchParams()
-  const { entry } = useEntry({ id: Number(id) })
+  const { entry } = useGetEntry({ id: Number(id) })
 
   useEffect(() => {
     setQuantity(entry?.quantity.toString())
