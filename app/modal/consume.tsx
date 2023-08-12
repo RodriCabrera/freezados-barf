@@ -7,6 +7,7 @@ import { Text, View } from '../../features/common/components/Themed'
 import { useEntry } from '../../features/entries/hooks/useEntry'
 import { Icon } from '../../features/common/components/Icon'
 import { SPECIES_ICONS_MAP } from '../../features/entries/constants'
+import EntryDAO from '../../database/DAOs/Entry.dao'
 
 export default function ConsumeModal() {
   const [quantity, setQuantity] = useState<string>()
@@ -28,6 +29,22 @@ export default function ConsumeModal() {
   }
 
   const storedDate = new Date(entry?.date_stored ?? '').toLocaleString()
+
+  const entries = new EntryDAO()
+  const handleConfirm = () => {
+    entries
+      .consumeEntry(Number(id), Number(quantity))
+      .then((res) => {
+        if (res) {
+          alert(`usados!`)
+          router.push('/')
+        }
+      })
+      .catch((err) => {
+        alert(`Error`)
+        return err
+      })
+  }
 
   return (
     <View style={styles.container}>
@@ -65,6 +82,7 @@ export default function ConsumeModal() {
           Cancelar
         </Button>
         <Button
+          onPress={handleConfirm}
           buttonStyle={{
             backgroundColor: 'rgba(111, 202, 186, 1)',
             borderRadius: 5

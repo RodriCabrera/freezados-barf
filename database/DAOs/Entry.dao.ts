@@ -161,4 +161,33 @@ export default class EntryDAO extends BaseDAO<Entry> {
       throw new Error('Error al obtener entradas')
     }
   }
+
+  async consumeEntry(id: Entry['id'], quantity: Entry['quantity']) {
+    try {
+      let response: EntryFull | undefined
+      await db.transactionAsync(async (tx) => {
+        const res = await tx.executeSqlAsync(
+          // if the quantity is the same as the quantity from the entry, then update the date_consumed
+          // if the quantity is less than the quantity from the entry, then update the quantity.
+          // if the quantity is greater than the quantity from the entry, then throw an error
+          `UPDATE entry 
+           SET 
+           quantity = CASE WHEN quantity = ? THEN 0 
+                           WHEN quantity > ? THEN quantity - ? 
+                           ELSE quantity END,
+           date_consumed = CASE WHEN quantity = ? THEN ${Date.now()}
+           WHERE id = ?
+          `,
+          [id, quantity]
+        )
+        if (this.checkError(res)) {
+          response = this.normalizeFullEntry(res.rows[0])
+        }
+      }, false)
+      return response
+    } catch (err) {
+      if (err instanceof Error) throw err
+      throw new Error('Error al obtener entradas')
+    }
+  }
 }
