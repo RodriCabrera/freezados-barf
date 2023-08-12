@@ -3,7 +3,6 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { Button } from '@rneui/base'
 
 import { Text, View } from '../../features/common/components/Themed'
-import { LinkButton } from '../../features/common/components/pressables/LinkButton'
 import { useEntry } from '../../features/entries/hooks/useEntry'
 
 export default function ConsumeModal() {
