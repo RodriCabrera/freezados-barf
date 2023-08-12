@@ -175,7 +175,8 @@ export default class EntryDAO extends BaseDAO<Entry> {
            quantity = CASE WHEN quantity = ? THEN 0 
                            WHEN quantity > ? THEN quantity - ? 
                            ELSE quantity END,
-           date_consumed = CASE WHEN quantity = ? THEN ${Date.now()} ELSE date_consumed END
+           date_consumed = CASE WHEN quantity = ? THEN ${Date.now()} 
+                                ELSE date_consumed END
            WHERE id = ?
           `,
           [id, quantity]
