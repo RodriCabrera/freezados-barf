@@ -164,30 +164,39 @@ export default class EntryDAO extends BaseDAO<Entry> {
 
   async consumeEntry(id: Entry['id'], quantity: Entry['quantity']) {
     try {
-      let response
+      let response = false
+      // Get element
       await db.transactionAsync(async (tx) => {
+        const entry = await tx.executeSqlAsync(
+          `SELECT * from ${TABLE_NAME} where id = ? limit 1;`,
+          [id]
+        )
+        if (!this.checkError(entry)) throw new Error('Item doesnt exist')
+        const {
+          id: _,
+          quantity: currQuantity,
+          ...curr
+        } = entry.rows[0] as Entry
+
+        // Update entry
         const res = await tx.executeSqlAsync(
-          // if the "consumed quantity" = quantity, then set quantity=0 and update the date_consumed
-          // if the "consumed quantity" < the quantity, then update the quantity.
-          // if the "consumed quantity" > the quantity, then throw an error
-          `UPDATE entry 
-           SET 
-           quantity = CASE WHEN quantity = ? THEN 0 
-                           WHEN quantity > ? THEN quantity - ? 
-                           ELSE quantity END,
-           date_consumed = CASE WHEN quantity = ? THEN ${Date.now()} 
-                                ELSE date_consumed END
-           taken = CASE WHEN quantity = ? THEN true ELSE END
+          `UPDATE ${TABLE_NAME} 
+           SET quantity = ?, date_consumed = ?, taken = 1
            WHERE id = ?
           `,
-          [id, quantity]
+          [Math.max(currQuantity - quantity, 0), Date.now(), id]
         )
+        // Prepare response and update list if not fully consumed
         if (this.checkError(res)) {
-          response = res
+          if (currQuantity > quantity) {
+            await this.insertOne({ ...curr, quantity: currQuantity - quantity })
+          }
+          response = true
         }
       }, false)
       return response
     } catch (err) {
+      console.log(err)
       if (err instanceof Error) throw err
       throw new Error('Error al obtener entradas')
     }

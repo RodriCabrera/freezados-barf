@@ -6,16 +6,16 @@ import UbicationDAO from '../../../database/DAOs/Ubication.dao'
 import UserDAO from '../../../database/DAOs/User.dao'
 import { Text, View } from './Themed'
 
-// function prepare() {
-//   const users = new UserDAO()
-//   users.dropTable('USER')
-//   const ubications = new UbicationDAO()
-//   ubications.dropTable('UBICATION')
-//   const foods = new FoodDAO()
-//   foods.dropTable('FOOD')
-//   const entries = new EntryDAO()
-//   entries.dropTable('ENTRY')
-// }
+function prepare() {
+  const users = new UserDAO()
+  users.dropTable('USER')
+  const ubications = new UbicationDAO()
+  ubications.dropTable('UBICATION')
+  const foods = new FoodDAO()
+  foods.dropTable('FOOD')
+  const entries = new EntryDAO()
+  entries.dropTable('ENTRY')
+}
 
 // prepare() // -> Prueba que se creen correctamente las tablas si ya estabamos usando alguna
 
@@ -86,8 +86,8 @@ export function DAOTests() {
         user_id: userId,
         ubication_id: ubicationId,
         food_id: foodId,
-        date_stored: undefined,
-        date_ready: undefined,
+        date_stored: Date.now() - 5000000,
+        date_ready: Date.now() - 10000,
         quantity: 1500,
         taken: false
       })

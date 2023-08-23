@@ -45,7 +45,7 @@ export default function ConsumeModal() {
         return err
       })
   }
-     
+
   return (
     <View style={styles.container}>
       {entry && (
