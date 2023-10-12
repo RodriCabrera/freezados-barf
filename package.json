@@ -37,7 +37,7 @@
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.23.2",
     "@types/react": "~18.2.14",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "eslint": "^8.47.0",
